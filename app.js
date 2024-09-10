@@ -41,9 +41,12 @@ const store = MongoStore.create({
     }
 })
 
-store.on("error",()=>{
-   console.log("Error in mongo session store",error)
-})
+// store.on("error",()=>{
+//    console.log("Error in mongo session store",error)
+// })
+ store.on("error", (error) => {
+    console.log("Error in mongo session store", error);
+});
 
 const sessionOptions = {
     store:store,
@@ -86,15 +89,17 @@ app.use((req, res, next) => {
     next();
 });
 
+console.log("Database URL:", process.env.ATLASDB_URL);
+
 // Use routes
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);
 
 // Error handling
-app.all("*", (req, res, next) => {
-    next(new ExpressError(404, "Page Not Found"));
-});
+// app.all("*", (req, res, next) => {
+//     next(new ExpressError(404, "Page Not Found"));
+// });
 
 app.use((err, req, res, next) => {
     const { statusCode = 500, message = "Something went wrong" } = err;

@@ -12,4 +12,9 @@ router.route("/login").get(userController.renderLogInForm).post(saveRedirectUrl,
 //logout
 router.get("/logout",userController.logOut);
 
+router.get("/signup", (req, res, next) => {
+    console.log("Accessed signup route");
+    next();
+});
+
 module.exports = router;
